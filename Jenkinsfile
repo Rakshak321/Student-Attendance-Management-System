@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                bat 'cd frontend && npm install && npm run build'
+                bat 'cd frontend && npm install && set CI=false&& npm run build'
             }
         }
 
@@ -23,8 +23,24 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t attendance-backend:jenkins ./backend'
-                bat 'docker build -t attendance-frontend:jenkins ./frontend'
+                bat 'docker build -t Raksha321/attendance-backend:latest ./backend'
+                bat 'docker build -t Raksha321/attendance-frontend:latest ./frontend'
+            }
+        }
+
+        stage('Docker Hub Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+
+                    bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
+
+                    bat 'docker push Raksha321/attendance-backend:latest'
+                    bat 'docker push Raksha321/attendance-frontend:latest'
+                }
             }
         }
     }
