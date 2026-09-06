@@ -43,5 +43,15 @@ pipeline {
                 bat 'kubectl get nodes'
             }
         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                bat 'kubectl set image deployment/attendance-backend backend=raksha321/attendance-backend:latest'
+                bat 'kubectl set image deployment/attendance-frontend frontend=raksha321/attendance-frontend:latest'
+
+                bat 'kubectl rollout status deployment/attendance-backend'
+                bat 'kubectl rollout status deployment/attendance-frontend'
+            }
+        }
     }
 }
