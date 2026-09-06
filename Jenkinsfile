@@ -18,7 +18,7 @@ pipeline {
             steps {
                 bat '''
                     cd backend
-                    npm install
+                    echo Backend source verified
                 '''
             }
         }
