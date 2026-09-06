@@ -2,15 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Docker Credential Test') {
+
+        stage('Docker Hub Login Test') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-credentials',
                     usernameVariable: 'DOCKER_USERNAME',
                     passwordVariable: 'DOCKER_PASSWORD'
                 )]) {
-                    bat 'echo Docker username is: %DOCKER_USERNAME%'
-                    bat 'if defined DOCKER_PASSWORD (echo Docker password variable is SET) else (echo Docker password variable is NOT SET)'
+
+                    powershell '''
+                        $env:DOCKER_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
+                    '''
                 }
             }
         }
