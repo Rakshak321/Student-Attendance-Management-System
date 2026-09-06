@@ -36,5 +36,12 @@ pipeline {
                 bat 'docker push raksha321/attendance-frontend:latest'
             }
         }
+
+        stage('Check Kubernetes') {
+            steps {
+                bat 'kubectl version --client'
+                bat 'kubectl get nodes'
+            }
+        }
     }
 }
