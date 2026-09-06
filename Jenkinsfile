@@ -3,21 +3,23 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build Frontend') {
             steps {
-                bat 'cd frontend && npm install && set CI=false && npm run build'
+                bat '''
+                    cd frontend
+                    npm install
+                    set "CI=false"
+                    npm run build
+                '''
             }
         }
 
         stage('Build Backend') {
             steps {
-                bat 'cd backend && npm install'
+                bat '''
+                    cd backend
+                    npm install
+                '''
             }
         }
 
