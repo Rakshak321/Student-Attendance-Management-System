@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attendance-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: attendance-frontend
+  template:
+    metadata:
+      labels:
+        app: attendance-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: Raksha321/attendance-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80

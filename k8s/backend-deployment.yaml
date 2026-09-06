@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attendance-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: attendance-backend
+  template:
+    metadata:
+      labels:
+        app: attendance-backend
+    spec:
+      containers:
+        - name: backend
+          image: Raksha321/attendance-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: backend-secret
