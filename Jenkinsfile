@@ -1,19 +1,6 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Docker Hub Login Test') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
-                    usernameVariable: 'DOCKER_USERNAME',
-                    passwordVariable: 'DOCKER_PASSWORD'
-                )]) {
-                    powershell '''
-                        $env:DOCKER_PASSWORD | docker login --username $env:DOCKER_USERNAME --password-stdin
-                    '''
-                }
-            }
-        }
+stage('Docker Hub Push') {
+    steps {
+        bat 'docker push raksha321/attendance-backend:latest'
+        bat 'docker push raksha321/attendance-frontend:latest'
     }
 }
