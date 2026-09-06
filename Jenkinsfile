@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                bat 'cd frontend && npm install && set CI=false&& npm run build'
+                bat 'cd frontend && npm install && set CI=false && npm run build'
             }
         }
 
@@ -23,8 +23,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t Raksha321/attendance-backend:latest ./backend'
-                bat 'docker build -t Raksha321/attendance-frontend:latest ./frontend'
+                bat 'docker build -t raksha321/attendance-backend:latest ./backend'
+                bat 'docker build -t raksha321/attendance-frontend:latest ./frontend'
             }
         }
 
@@ -38,8 +38,8 @@ pipeline {
 
                     bat 'echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin'
 
-                    bat 'docker push Raksha321/attendance-backend:latest'
-                    bat 'docker push Raksha321/attendance-frontend:latest'
+                    bat 'docker push raksha321/attendance-backend:latest'
+                    bat 'docker push raksha321/attendance-frontend:latest'
                 }
             }
         }
